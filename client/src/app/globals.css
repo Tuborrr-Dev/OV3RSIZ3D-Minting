@@ -1,0 +1,288 @@
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Roboto+Flex:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap");
+@import "@rainbow-me/rainbowkit/styles.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-electric-yellow: #fcee54;
+  --color-canvas: #000000;
+  --color-purple-deep: #0c0c0c;
+  --color-purple-elevated: #141414;
+}
+
+body {
+  background-color: #000000;
+  color: #e5e1e4;
+  font-family: "Roboto Flex", system-ui, sans-serif;
+  overflow-x: hidden;
+  selection-background-color: #fcee54;
+  selection-color: #000000;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+::-webkit-scrollbar-thumb {
+  background: #fcee54;
+}
+
+/* Cyberpunk Chamfered Shapes */
+.clip-chamfer {
+  clip-path: polygon(
+    0 0,
+    calc(100% - 12px) 0,
+    100% 12px,
+    100% 100%,
+    12px 100%,
+    0 calc(100% - 12px)
+  );
+}
+
+.clip-chamfer-btn {
+  clip-path: polygon(
+    0 0,
+    calc(100% - 10px) 0,
+    100% 10px,
+    100% 100%,
+    10px 100%,
+    0 calc(100% - 10px)
+  );
+}
+
+.clip-chamfer-reverse {
+  clip-path: polygon(
+    10px 0,
+    100% 0,
+    100% calc(100% - 10px),
+    calc(100% - 10px) 100%,
+    0 100%,
+    0 10px
+  );
+}
+
+.clip-card-notch {
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 16px),
+    calc(100% - 16px) 100%,
+    0 100%
+  );
+}
+
+/* Glitch Chromatic Text Effect (Exact match from ov3rsiz3d_desktop_web3_experience) */
+.glitch-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch-wrapper::before,
+.glitch-wrapper::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  clip: rect(0, 0, 0, 0);
+}
+
+.glitch-wrapper:hover::before {
+  left: -2px;
+  text-shadow: 2px 0 #E8384F;
+  animation: glitch-anim-1 1.2s infinite linear alternate-reverse;
+}
+
+.glitch-wrapper:hover::after {
+  left: 2px;
+  text-shadow: -2px 0 #4dffb2;
+  animation: glitch-anim-2 1.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+  0% { clip: rect(12px, 9999px, 44px, 0); }
+  30% { clip: rect(65px, 9999px, 80px, 0); }
+  70% { clip: rect(2px, 9999px, 20px, 0); }
+  100% { clip: rect(50px, 9999px, 95px, 0); }
+}
+
+@keyframes glitch-anim-2 {
+  0% { clip: rect(32px, 9999px, 50px, 0); }
+  40% { clip: rect(10px, 9999px, 35px, 0); }
+  80% { clip: rect(70px, 9999px, 90px, 0); }
+  100% { clip: rect(25px, 9999px, 45px, 0); }
+}
+
+/* Interactive Laser Scanline Contact Glitch */
+.scan-beam-laser {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 240, 255, 0.6) 12%,
+    #fcee54 50%,
+    rgba(232, 56, 79, 0.6) 88%,
+    transparent 100%
+  );
+  box-shadow: 0 0 16px #fcee54, 0 0 32px rgba(0, 240, 255, 0.7), 0 0 8px #fcee54;
+  pointer-events: none;
+  z-index: 35;
+}
+
+@keyframes scanJitter {
+  0% {
+    transform: translate(0, 0) skewX(0deg);
+  }
+  20% {
+    transform: translate(-3px, 1px) skewX(-2.5deg);
+  }
+  40% {
+    transform: translate(2px, -1px) skewX(2deg);
+  }
+  60% {
+    transform: translate(-2px, -1px) skewX(-1.5deg);
+  }
+  80% {
+    transform: translate(3px, 1px) skewX(2.5deg);
+  }
+  100% {
+    transform: translate(0, 0) skewX(0deg);
+  }
+}
+
+@keyframes scanJitterCard {
+  0% {
+    transform: translate(0, 0);
+  }
+  30% {
+    transform: translate(-2px, 1px);
+  }
+  70% {
+    transform: translate(2px, -1px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.active-scan-glitch {
+  animation: scanJitter 0.1s infinite linear !important;
+  text-shadow: -3px 0 #e8384f, 3px 0 #00f0ff, 0 0 10px rgba(252, 238, 84, 0.9) !important;
+  filter: contrast(1.8) brightness(1.4) !important;
+  will-change: transform, text-shadow;
+}
+
+.active-scan-glitch-title {
+  animation: scanJitter 0.08s infinite linear !important;
+  text-shadow: -7px 0 #e8384f, 7px 0 #00f0ff, 0 0 32px rgba(252, 238, 84, 1) !important;
+  filter: contrast(2) brightness(1.6) drop-shadow(0 0 25px #00f0ff) !important;
+  will-change: transform, text-shadow;
+}
+
+.glitch-wrapper.active-scan-glitch-title::before,
+.glitch-wrapper.active-scan-glitch::before {
+  left: -4px !important;
+  text-shadow: 4px 0 #e8384f !important;
+  animation: glitch-anim-1 0.25s infinite linear alternate-reverse !important;
+}
+
+.glitch-wrapper.active-scan-glitch-title::after,
+.glitch-wrapper.active-scan-glitch::after {
+  left: 4px !important;
+  text-shadow: -4px 0 #00f0ff !important;
+  animation: glitch-anim-2 0.3s infinite linear alternate-reverse !important;
+}
+
+.active-scan-glitch-card {
+  animation: scanJitterCard 0.14s infinite linear !important;
+  border-color: #fcee54 !important;
+  box-shadow: 0 0 32px rgba(252, 238, 84, 0.4), inset 0 0 18px rgba(0, 240, 255, 0.25) !important;
+  filter: brightness(1.2) contrast(1.1) !important;
+  will-change: transform, box-shadow;
+}
+
+/* Continuous Drone Aerial Reconnaissance Animations */
+@keyframes droneHover {
+  0%, 100% {
+    transform: translateY(0) scale(1.02);
+  }
+  50% {
+    transform: translateY(-10px) scale(1.05);
+  }
+}
+
+.drone-cam {
+  animation: droneHover 16s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+@keyframes radarSweep {
+  0% {
+    top: -5%;
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.8;
+  }
+  85% {
+    opacity: 0.8;
+  }
+  100% {
+    top: 105%;
+    opacity: 0;
+  }
+}
+
+.radar-sweep-bar {
+  animation: radarSweep 10s ease-in-out infinite;
+}
+
+/* 3D Wireframe Cage Float & Spin */
+@keyframes subtleFloat {
+  0%, 100% {
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    transform: scale(1.01) translateY(-6px);
+  }
+}
+
+.floating-cage {
+  animation: subtleFloat 8s ease-in-out infinite;
+}
+
+@keyframes cageRotate {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.02);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+.cage-anim {
+  animation: cageRotate 32s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+/* CRT Scanline Overlay */
+.scanlines {
+  background: linear-gradient(
+    rgba(255, 255, 255, 0) 50%,
+    rgba(0, 0, 0, 0.7) 50%
+  );
+  background-size: 100% 4px;
+}
