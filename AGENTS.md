@@ -4,7 +4,7 @@ Read this file fully before writing any code. If something here conflicts with a
 
 ## 1. What we are building
 A mint website for the OV3RSIZ3D NFT collection on Robinhood Chain (EVM, Arbitrum Orbit L2).
-Three parts in one monorepo: smart contract, backend API, web frontend.
+Three parts in one repo: smart contract (Solidity), backend API (Python), client website (TypeScript/JavaScript).
 This is a NEW collection mint. It is separate from the future "Fitting Room" app, but routes and code must not block that app living under the same domain later.
 
 ## 2. Locked decisions
@@ -28,13 +28,14 @@ Repo: OV3RSIZ3D-Minting. Two main folders: core (contracts + API) and client (we
 ```
 /core
   /contracts   Foundry project (Solidity ^0.8.24, OpenZeppelin, ERC721A)
-  /api         Node + TypeScript + Fastify + Postgres (Drizzle ORM)
+  /api         Python 3.12 + FastAPI + PostgreSQL (SQLAlchemy 2 + Alembic), pytest, ruff
 /client        Next.js (App Router) + TypeScript + Tailwind + wagmi + viem + RainbowKit
+  /client/prototype/home   Static Stitch export of the home page (design reference + first local version). Plain HTML + Tailwind, no build step.
 /docs          Notes, deployment checklist
 AGENTS.md      This file
 .env.example   One in /core/api, one in /client. NEVER commit real secrets.
 ```
-Each package has its own README, package.json (or foundry.toml) and lint config. Do not add other top-level folders besides /docs.
+Each package has its own README and tooling config (foundry.toml, pyproject.toml, package.json). Do not add other top-level folders besides /docs.
 
 ## 5. Contract requirements (`/core/contracts`)
 - ERC721A, Ownable, ReentrancyGuard, ERC2981
@@ -53,11 +54,13 @@ Each package has its own README, package.json (or foundry.toml) and lint config.
 - `POST /allowlist/verify-tasks`: checks X tasks via X OAuth and the X API; promotes to GTD or FCFS based on config (task list is a config file, not code)
 - `GET /allowlist/status/:wallet`: eligibility for the client eligibility checker
 - `POST /mint/voucher`: returns a signed EIP-712 voucher for an eligible wallet in the currently open phase
+- Language: Python. Sign EIP-712 vouchers with `eth-account`; read chain state with `web3.py` if needed.
 - Signer private key is read from env only. Never log it, never return it.
-- Rate-limit all endpoints. Validate wallet addresses (EIP-55) and normalise to lowercase for storage.
-- Admin CLI scripts (not public endpoints) to export lists and manually add or remove wallets.
+- Rate-limit all endpoints (slowapi or equivalent). Validate wallet addresses (EIP-55) and normalise to lowercase for storage.
+- Admin CLI scripts (Typer, not public endpoints) to export lists and manually add or remove wallets.
 
 ## 7. Client requirements (`/client`)
+Hosting: Firebase Hosting (the live domain already points at it). Build the client as a STATIC Next.js export (`output: 'export'`, `images.unoptimized: true`, output folder `out/`). No SSR, no Next.js API routes: all chain reads happen in the browser, and the Python API is hosted separately.
 Routes:
 - `/` hero, collection stats, sneak peeks, roadmap, FAQ
 - `/allowlist` task checklist, wallet input, eligibility checker
@@ -87,7 +90,7 @@ Rules:
 - Every contract change needs matching tests before merge
 
 ## 10. Build order for the agent
-1. Scaffold /core/contracts, /core/api and /client with README, lint, formatting, `.env.example`, CI (GitHub Actions: lint + test)
+1. Scaffold /core/contracts, /core/api (Python) and /client with README, lint, formatting, `.env.example`, CI (GitHub Actions: lint + test)
 2. Contract + tests
 3. API + DB schema + voucher signing
 4. Client pages with mocked data, then wire to contract and API
