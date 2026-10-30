@@ -8,82 +8,81 @@ export function CityscapeBackdrop() {
       {/* 1. Pure Pitch Black Void */}
       <div className="absolute inset-0 bg-black" />
 
-      {/* 2. Continuous Drone Reconnaissance Aerial Cityscape Silhouette (True Noir Blacks) */}
-      <div className="absolute inset-0 drone-cam">
-        <svg
-          className="absolute bottom-0 w-full h-[85vh] min-h-[550px] object-cover opacity-70"
-          fill="none"
-          preserveAspectRatio="none"
-          viewBox="0 0 1440 900"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          {/* Far backdrop towers */}
-          <rect fill="#050505" height="820" opacity="0.95" width="190" x="0" y="80" />
-          <rect fill="#050505" height="820" opacity="0.95" width="190" x="1250" y="80" />
-          <rect fill="#080808" height="720" opacity="0.95" width="95" x="150" y="180" />
-          <rect fill="#080808" height="720" opacity="0.95" width="95" x="1195" y="180" />
+      {/* 2. Dystopian Cyber City Skyline (Exact authentic art from oversizednft.xyz + spiced up) */}
+      <div className="absolute inset-0 drone-cam flex items-end justify-center pointer-events-none">
+        <div className="relative w-full h-[92vh] min-h-[600px] max-h-[1200px] overflow-hidden [mask-image:linear-gradient(to_bottom,black_80%,transparent_100%)]">
+          {/* Authentic High-Res Skyline Image from oversizednft.xyz */}
+          <picture>
+            <source srcSet="/brand/city_skyline.webp" type="image/webp" />
+            <img
+              src="/brand/city_skyline.png"
+              alt="OV3RSIZ3D Cyber City Silhouette"
+              className="absolute inset-0 w-full h-full object-cover object-bottom opacity-85 select-none pointer-events-none"
+            />
+          </picture>
 
-          {/* Center backdrop angled structures */}
-          <rect fill="#060606" height="380" opacity="0.98" width="620" x="410" y="520" />
-          <polygon fill="#0a0a0a" points="530,520 575,480 865,480 910,520" />
-          <polygon fill="#040404" points="610,480 655,420 785,420 830,480" />
+          {/* SPICE 1: Warning Beacon Lights on Tower Antennas (Pulsing LEDs) */}
+          {/* Left Megatower Summit Beacon */}
+          <div className="absolute top-[8%] left-[6.5%] sm:left-[7.5%] -translate-x-1/2 flex items-center justify-center">
+            <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping opacity-80" />
+            <span className="absolute w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_12px_#ef4444]" />
+          </div>
 
-          {/* Left Industrial Cyber Columns & Spire antennas */}
-          <g fill="#080808" stroke="#141414" strokeWidth="2">
-            <rect height="760" width="150" x="40" y="140" />
-            <rect height="40" width="30" x="70" y="100" />
-            {/* Blinking Data nodes */}
-            <g fill="#00E599" opacity="0.4">
-              <rect height="10" width="2" x="60" y="170" />
-              <rect height="10" width="2" x="75" y="170" />
-              <rect height="10" width="2" x="90" y="170" />
-              <rect height="10" width="2" x="110" y="170" />
-              <rect height="10" width="2" x="130" y="170" />
-              <rect height="14" width="2" x="60" y="210" />
-              <rect height="14" width="2" x="75" y="210" />
-              <rect height="14" width="2" x="90" y="210" />
-              <rect height="14" width="2" x="60" y="270" />
-              <rect height="20" width="2" x="60" y="370" />
-              <rect height="20" width="2" x="75" y="370" />
-              <rect height="15" width="2" x="60" y="470" />
-              <rect height="15" width="2" x="75" y="550" />
-            </g>
-            <rect fill="#030303" height="30" width="20" x="25" y="280" />
-            <rect fill="#030303" height="60" width="20" x="25" y="390" />
-            <rect fill="#030303" height="140" width="15" x="180" y="220" />
-          </g>
+          {/* Left Mid-Tower Spires */}
+          <div className="absolute top-[47%] left-[17%] sm:left-[18.5%] flex items-center justify-center">
+            <span className="w-1.5 h-1.5 rounded-full bg-electricYellow animate-pulse opacity-90 shadow-[0_0_8px_#FCEE54]" />
+          </div>
 
-          {/* Right Industrial Cyber Columns */}
-          <g fill="#080808" stroke="#141414" strokeWidth="2">
-            <rect height="760" width="150" x="1250" y="140" />
-            <rect height="40" width="30" x="1340" y="100" />
-            {/* Windows & telemetry nodes */}
-            <g fill="#00E599" opacity="0.4">
-              <rect height="10" width="2" x="1280" y="170" />
-              <rect height="10" width="2" x="1295" y="170" />
-              <rect height="10" width="2" x="1310" y="170" />
-              <rect height="14" width="2" x="1280" y="220" />
-              <rect height="14" width="2" x="1295" y="220" />
-              <rect height="20" width="2" x="1280" y="360" />
-              <rect height="20" width="2" x="1360" y="360" />
-              <rect height="15" width="2" x="1280" y="520" />
-            </g>
-            <rect fill="#030303" height="120" width="18" x="1235" y="220" />
-            <rect fill="#030303" height="50" width="20" x="1390" y="290" />
-          </g>
+          {/* Right Mid-Tower Spires */}
+          <div className="absolute top-[47%] right-[17%] sm:right-[18.5%] flex items-center justify-center">
+            <span className="w-1.5 h-1.5 rounded-full bg-electricYellow animate-pulse opacity-90 shadow-[0_0_8px_#FCEE54]" />
+          </div>
 
-          {/* Heavy Infrastructure Beams & Trusses */}
-          <rect fill="#060606" height="18" width="1040" x="200" y="650" />
-          <rect fill="#040404" height="24" width="880" x="280" y="700" />
-          <polygon fill="#080808" points="600,650 630,760 810,760 840,650" />
-        </svg>
+          {/* Right Megatower Summit Beacon */}
+          <div className="absolute top-[8%] right-[6.5%] sm:right-[7.5%] translate-x-1/2 flex items-center justify-center">
+            <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping opacity-80" />
+            <span className="absolute w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_12px_#ef4444]" />
+          </div>
+
+          {/* SPICE 2: Active Cyber Window Telemetry Flashes */}
+          <div className="absolute top-[22%] left-[4.5%] hidden sm:block w-1.5 h-3 bg-neonGreen/80 shadow-[0_0_10px_#00E599] animate-pulse" />
+          <div className="absolute top-[34%] left-[6.5%] hidden sm:block w-1.5 h-4 bg-neonGreen/90 shadow-[0_0_10px_#00E599] animate-pulse [animation-delay:1.1s]" />
+          <div className="absolute top-[24%] right-[4.5%] hidden sm:block w-1.5 h-3 bg-neonGreen/80 shadow-[0_0_10px_#00E599] animate-pulse [animation-delay:0.7s]" />
+          <div className="absolute top-[38%] right-[6.5%] hidden sm:block w-1.5 h-4 bg-neonGreen/90 shadow-[0_0_10px_#00E599] animate-pulse [animation-delay:1.5s]" />
+
+          {/* SPICE 3: Atmospheric Ground Glow / War-Torn Cyber Haze */}
+          <div className="absolute bottom-0 left-0 right-0 h-44 bg-gradient-to-t from-black via-black/70 to-transparent" />
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-4/5 h-32 bg-electricYellow/[0.025] blur-[100px] rounded-full pointer-events-none" />
+        </div>
       </div>
 
-      {/* 3. Subtle Cyberpunk Atmospheric Highlights */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[850px] h-[350px] bg-electricYellow/[0.03] rounded-full blur-[160px]" />
+      {/* 3. Subtle Reconnaissance Drone HUD Indicators */}
+      <div className="absolute inset-0 pointer-events-none p-4 sm:p-6 flex flex-col justify-between opacity-30 text-[9px] sm:text-[10px] font-mono tracking-widest text-electricYellow select-none">
+        <div className="flex justify-between items-start">
+          <div className="space-y-0.5">
+            <div>┌ [RECON_DRONE_09 // PATROL: SECTOR_WAR_ZONE]</div>
+            <div className="text-white/40 text-[8px] sm:text-[9px]">ELEV: 420M | OPTIC: THERMAL_CYBER</div>
+          </div>
+          <div className="text-right space-y-0.5">
+            <div>[ORBIT_UPLINK: ONLINE] ┐</div>
+            <div className="text-white/40 text-[8px] sm:text-[9px]">LINK: RH_CHAIN_L2 // 0.001 GWEI</div>
+          </div>
+        </div>
 
-      {/* 4. Deep Pitch Black Radial Vignette */}
-      <div className="absolute inset-0 bg-radial from-transparent via-black/40 to-black" />
+        <div className="flex justify-between items-end pb-16 sm:pb-12">
+          <div className="space-y-0.5">
+            <div className="text-white/40 text-[8px] sm:text-[9px]">SURVEILLANCE: ACTIVE_SWEEP</div>
+            <div>└ DYS_INDEX: 99.4%</div>
+          </div>
+          <div className="text-right space-y-0.5">
+            <div className="text-white/40 text-[8px] sm:text-[9px]">STATUS: LOCK_CONFIRMED</div>
+            <div>PERIMETER: SECURED ┘</div>
+          </div>
+        </div>
+      </div>
+
+      {/* 4. Deep Pitch Black Radial Vignette for Content Contrast */}
+      <div className="absolute inset-0 bg-radial from-transparent via-black/25 to-black/85 pointer-events-none" />
     </div>
   );
 }

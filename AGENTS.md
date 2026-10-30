@@ -30,7 +30,9 @@ Repo: OV3RSIZ3D-Minting. Two main folders: core (contracts + API) and client (we
   /contracts   Foundry project (Solidity ^0.8.24, OpenZeppelin, ERC721A)
   /api         Python 3.12 + FastAPI + PostgreSQL (SQLAlchemy 2 + Alembic), pytest, ruff
 /client        Next.js (App Router) + TypeScript + Tailwind + wagmi + viem + RainbowKit
-  /client/prototype/home   Static Stitch export of the home page (design reference + first local version). Plain HTML + Tailwind, no build step.
+  /client/src              The real site: app/ (routes), components/, lib/ (constants, wagmi, web3 context), data/ (copy as typed data files)
+  /client/public           Static assets: brand/ (skyline), entities/ (collection art, .webp)
+  /client/prototype        FROZEN Google Stitch export. Design reference only. Never edit, serve or copy code from it.
 /docs          Notes, deployment checklist
 AGENTS.md      This file
 .env.example   One in /core/api, one in /client. NEVER commit real secrets.
@@ -60,7 +62,8 @@ Each package has its own README and tooling config (foundry.toml, pyproject.toml
 - Admin CLI scripts (Typer, not public endpoints) to export lists and manually add or remove wallets.
 
 ## 7. Client requirements (`/client`)
-Hosting: Firebase Hosting (the live domain already points at it). Build the client as a STATIC Next.js export (`output: 'export'`, `images.unoptimized: true`, output folder `out/`). No SSR, no Next.js API routes: all chain reads happen in the browser, and the Python API is hosted separately.
+Current state (2026-10-30): the Next.js 14 app already exists in /client and runs on localhost:3000 with `npm run dev`. Pages: /, /mint, /allowlist, /about. The wallet, mint and allowlist logic is SIMULATED (src/lib/web3-context.tsx) until the contract and API exist; it is off unless NEXT_PUBLIC_DEMO_MODE=true.
+Staging: Vercel, project root directory `client`, framework preset Next.js, every push to main redeploys. Production: Firebase Hosting (the live domain already points at it). Build the client as a STATIC Next.js export (`output: 'export'`, `images.unoptimized: true`, output folder `out/`). No SSR, no Next.js API routes: all chain reads happen in the browser, and the Python API is hosted separately.
 Routes:
 - `/` hero, collection stats, sneak peeks, roadmap, FAQ
 - `/allowlist` task checklist, wallet input, eligibility checker
@@ -72,16 +75,28 @@ Rules:
 - Mobile-first. Read all live state (supply, phase, price) from the contract, not from the API.
 - Define Robinhood Chain as a custom chain in wagmi from env vars.
 
+## 7b. Frontend conventions (the standard for this repo)
+- Next.js App Router, TypeScript, Tailwind 3. `@/` = `client/src`. Named exports for components in `src/components`; `"use client"` only where needed.
+- Copy and lists live in typed files under `src/data/` (or `src/lib/constants.ts`), not inline in JSX, so edits do not touch markup.
+- Reuse tokens from `tailwind.config.ts` and `globals.css`: colours `electricYellow`, `signalRed`, `signalGreen`, `glitchCyan`; fonts `font-headline` (Space Grotesk), `font-body` (Roboto Flex), `font-mono` (Space Mono); shapes `.clip-chamfer*`, `.clip-card-notch`; `.scanlines`. Do not introduce a second design language.
+- Images: collection art in `client/public/entities/*.webp`, shown through `src/components/ArtFrame.tsx`. Never recolour, filter or overlay the artwork; effects go on frames only. No hot-linked images.
+- Motion: glitch is a one-shot transition, never constant. Everything animated respects `prefers-reduced-motion`.
+- Accessibility: semantic landmarks, keyboard support, visible focus, text contrast 4.5:1 on dark.
+- No new npm packages without asking. Before finishing any task run `npm run lint` and `npm run build` in /client and report changed files.
+
+## 7c. Content rule (non-negotiable)
+Only use copy that the maintainer has supplied in a prompt or in /docs. Never invent specs, materials, prices, dates, partners, contract addresses, metrics or features. Unknown values display as "TBA". Known facts: 2,222 supply; hand-drawn hooded entities in oversized clothing; Robinhood Chain (Arbitrum Orbit L2); phases Team (22), GTD (1 per wallet), FCFS (1 per wallet), Public; mint date TBA (planned Q4 2026); mint price TBA; The Fitting Room is a free app, built for holders first. There are no physical garments, NFC chips or merchandise in the project.
+
 ## 8. Design direction (from the live oversizednft.xyz site)
 - Dark-first. Near-black background with a dark purple cyberpunk skyline backdrop.
 - Primary accent: electric yellow (approx `#FCEE54`). Use sparingly for headlines, borders, CTAs.
 - Secondary accents: red for status and errors, green for success tags.
-- Headline wordmark in leetspeak: OV3RSIZ3D. Wide geometric/techno display font for headings (Orbitron-style), Roboto for body.
+- Headline wordmark in leetspeak: OV3RSIZ3D. Display/headline font is Space Grotesk, body is Roboto Flex, labels are Space Mono (as configured in tailwind.config.ts).
 - Hero headline has a subtle chromatic-aberration glitch effect. Use glitch on transitions only, not constant motion.
 - Angular, notched cyberpunk dividers between sections.
 - Top strip text: "ESTABLISHED ON BLOCKCHAIN - LIMITED EDITION".
-- Nav: sneak peaks, about, apply (becomes allowlist/mint), X icon link.
-- Logo assets will be dropped into `/client/public/brand/`. Use placeholders until then.
+- Nav: sneak peeks, field guide, roadmap, about, allowlist, mint, X icon link (https://x.com/oversizednft).
+- Logo assets go in `/client/public/brand/`. Home sections: hero, The Edition strip, Field Guide (id field-guide), Sneak Peeks (id sneak-peeks), Mint Station, Roadmap (id roadmap), FAQ.
 
 ## 9. Security rules (non-negotiable)
 - No private keys, API secrets or signer keys in the repo or in client bundles
