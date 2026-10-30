@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OV3RSIZ3D — Established on Blockchain</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Space+Grotesk:wght@400;500;600;700&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400&amp;family=Syne:wght@700;800;900&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Custom Tailwind Configuration -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandYellow: '#FEF036',
+            electricYellow: '#E2F924',
+            darkBg: '#08060B',
+            cyanGlitch: '#00F0FF',
+            redGlitch: '#FF0055',
+          },
+          fontFamily: {
+            mono: ['"Space Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+            sans: ['"Space Grotesk"', 'sans-serif'],
+            display: ['"Anton"', 'Impact', '"Syne"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+<!-- BEGIN: Custom Styles -->
+<style data-purpose="typography">
+    .top-ticker {
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.25em;
+      font-size: 11.5px;
+      color: #94a3b8;
+    }
+
+    .nav-btn {
+      font-family: 'Space Grotesk', sans-serif;
+      color: #FEF036;
+      font-weight: 500;
+      font-size: 15px;
+      letter-spacing: -0.01em;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .nav-btn:hover {
+      color: #ffffff;
+      text-shadow: 0 0 12px rgba(254, 240, 54, 0.7);
+    }
+
+    .hero-title {
+      font-family: 'Anton', 'Impact', sans-serif;
+      letter-spacing: 0.01em;
+      transform: scaleY(1.18);
+      font-size: clamp(5.2rem, 16vw, 15.5rem);
+      line-height: 0.82;
+      text-transform: uppercase;
+      font-weight: 400;
+    }
+  </style>
+<style data-purpose="chromatic-effects">
+    /* Precise RGB Stereoscopic Chromatic Offsets matching reference */
+    .text-layer-cyan {
+      color: #00F0FF;
+      transform: translate(-14px, -2px);
+      filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.5));
+      mix-blend-mode: screen;
+      opacity: 0.85;
+    }
+    .text-layer-red {
+      color: #FF0055;
+      transform: translate(14px, 3px);
+      filter: drop-shadow(0 0 10px rgba(255, 0, 85, 0.5));
+      mix-blend-mode: screen;
+      opacity: 0.8;
+    }
+    .text-layer-deepblue {
+      color: #1a2a5e;
+      transform: translate(-7px, 6px);
+      opacity: 0.75;
+    }
+    .text-layer-front {
+      color: #FEF036;
+      position: relative;
+      z-index: 25;
+      text-shadow: 0 0 20px rgba(254, 240, 54, 0.2);
+    }
+  </style>
+<style data-purpose="animations">
+    @keyframes subtleFloat {
+      0%, 100% { transform: scale(1) translateY(0); }
+      50% { transform: scale(1.01) translateY(-6px); }
+    }
+    .floating-cage {
+      animation: subtleFloat 8s ease-in-out infinite;
+    }
+    
+    @keyframes cageRotate {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.02); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+
+    .cage-anim {
+      animation: cageRotate 26s linear infinite;
+      transform-origin: 50% 50%;
+    }
+
+    .chalk-filter {
+      filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
+    }
+
+    /* Modal slide animations */
+    .modal-backdrop {
+      backdrop-filter: blur(12px);
+      background-color: rgba(5, 4, 8, 0.88);
+    }
+
+    /* Subtle custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #09080c;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #FEF036;
+    }
+  </style>
+</head>
+<body class="bg-black text-white min-h-screen overflow-x-hidden selection:bg-brandYellow selection:text-black font-sans antialiased">
+<!-- BEGIN: TopAnnouncementBar -->
+<header class="w-full bg-black border-b border-white/5 py-2.5 z-40 relative flex items-center justify-center">
+<p class="top-ticker uppercase font-bold tracking-[0.25em] text-center select-none">
+    ESTABLISHED ON BLOCKCHAIN — LIMITED EDITION
+  </p>
+</header>
+<!-- END: TopAnnouncementBar -->
+<!-- BEGIN: NavigationBar -->
+<nav class="absolute top-10 right-0 z-50 px-6 sm:px-10 md:px-14 py-3 flex items-center gap-6 md:gap-9" data-purpose="main-nav">
+<button class="nav-btn cursor-pointer lowercase focus:outline-none" onclick="openModal('sneak-peaks-modal')">
+    sneak peaks
+  </button>
+<button class="nav-btn cursor-pointer lowercase focus:outline-none" onclick="openModal('about-modal')">
+    about
+  </button>
+<button class="nav-btn cursor-pointer lowercase focus:outline-none" onclick="openModal('apply-modal')">
+    apply
+  </button>
+<!-- X (Twitter) Logo -->
+<a aria-label="Official X profile" class="text-white hover:text-brandYellow transition-all duration-200 transform hover:scale-110 pl-1 inline-flex items-center" href="https://x.com" rel="noopener noreferrer" target="_blank">
+<svg aria-hidden="true" class="w-5 h-5 md:w-[22px] md:h-[22px] fill-current" viewbox="0 0 24 24">
+<path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+</svg>
+</a>
+</nav>
+<!-- END: NavigationBar -->
+<!-- BEGIN: HeroMain -->
+<main class="relative w-full h-[calc(100vh-42px)] min-h-[640px] flex items-center justify-center overflow-hidden bg-[#07050a]">
+<!-- Cityscape Silhouette Background -->
+<div class="absolute inset-0 pointer-events-none select-none z-0" data-purpose="cyberpunk-city-background">
+<!-- Dark gradient sky -->
+<div class="absolute inset-0 bg-gradient-to-t from-[#040306] via-[#0d0914] to-[#040305]"></div>
+<!-- Vector City Skyline & Cyber Spire Silhouettes -->
+<svg class="absolute inset-0 w-full h-full object-cover" fill="none" preserveaspectratio="none" viewbox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg">
+<!-- Far backdrop towers -->
+<rect fill="#100b17" height="820" opacity="0.9" width="190" x="0" y="80"></rect>
+<rect fill="#100b17" height="820" opacity="0.9" width="190" x="1250" y="80"></rect>
+<rect fill="#140e1d" height="720" opacity="0.9" width="95" x="150" y="180"></rect>
+<rect fill="#140e1d" height="720" opacity="0.9" width="95" x="1195" y="180"></rect>
+<!-- Center backdrop structures -->
+<rect fill="#120c19" height="380" opacity="0.95" width="620" x="410" y="520"></rect>
+<polygon fill="#161021" points="530,520 575,480 865,480 910,520"></polygon>
+<polygon fill="#0e0814" points="610,480 655,420 785,420 830,480"></polygon>
+<!-- Left Industrial Cyber Columns -->
+<g fill="#160f20" stroke="#22172f" stroke-width="2">
+<rect height="760" width="150" x="40" y="140"></rect>
+<rect height="40" width="30" x="70" y="100"></rect>
+<!-- Data nodes -->
+<g fill="#2dfd9f" opacity="0.2">
+<rect height="10" width="2" x="60" y="170"></rect>
+<rect height="10" width="2" x="75" y="170"></rect>
+<rect height="10" width="2" x="90" y="170"></rect>
+<rect height="10" width="2" x="110" y="170"></rect>
+<rect height="10" width="2" x="130" y="170"></rect>
+<rect height="14" width="2" x="60" y="210"></rect>
+<rect height="14" width="2" x="75" y="210"></rect>
+<rect height="14" width="2" x="90" y="210"></rect>
+<rect height="14" width="2" x="60" y="270"></rect>
+<rect height="20" width="2" x="60" y="370"></rect>
+<rect height="20" width="2" x="75" y="370"></rect>
+<rect height="15" width="2" x="60" y="470"></rect>
+<rect height="15" width="2" x="75" y="550"></rect>
+</g>
+<rect fill="#0e0a15" height="30" width="20" x="25" y="280"></rect>
+<rect fill="#0e0a15" height="60" width="20" x="25" y="390"></rect>
+<rect fill="#0e0a15" height="140" width="15" x="180" y="220"></rect>
+</g>
+<!-- Right Industrial Cyber Columns -->
+<g fill="#160f20" stroke="#22172f" stroke-width="2">
+<rect height="760" width="150" x="1250" y="140"></rect>
+<rect height="40" width="30" x="1340" y="100"></rect>
+<!-- Windows -->
+<g fill="#2dfd9f" opacity="0.2">
+<rect height="10" width="2" x="1280" y="170"></rect>
+<rect height="10" width="2" x="1295" y="170"></rect>
+<rect height="10" width="2" x="1310" y="170"></rect>
+<rect height="14" width="2" x="1280" y="220"></rect>
+<rect height="14" width="2" x="1295" y="220"></rect>
+<rect height="20" width="2" x="1280" y="360"></rect>
+<rect height="20" width="2" x="1360" y="360"></rect>
+<rect height="15" width="2" x="1280" y="520"></rect>
+</g>
+<rect fill="#0e0a15" height="120" width="18" x="1235" y="220"></rect>
+<rect fill="#0e0a15" height="50" width="20" x="1390" y="290"></rect>
+</g>
+<!-- Infrastructure Beams -->
+<rect fill="#130d1c" height="18" width="1040" x="200" y="650"></rect>
+<rect fill="#0f0917" height="24" width="880" x="280" y="700"></rect>
+<polygon fill="#150f1f" points="600,650 630,760 810,760 840,650"></polygon>
+</svg>
+<!-- Heavy Vignette -->
+<div class="absolute inset-0 bg-radial from-transparent via-black/45 to-black/90"></div>
+</div>
+<!-- Polygonal Wireframe Cage (Bright Neon Yellow #FEF036) -->
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10 floating-cage" data-purpose="yellow-wireframe-cage">
+<svg class="cage-anim w-full max-w-[1340px] h-[86vh] max-h-[780px] opacity-95" fill="none" viewbox="0 0 1000 650" xmlns="http://www.w3.org/2000/svg">
+<!-- Outer polygonal facet frame -->
+<polygon points="340,35 660,35 845,150 900,480 770,615 230,615 100,480 155,150" stroke="#FEF036" stroke-linejoin="round" stroke-width="4.5"></polygon>
+<!-- Interior 3D faceted geometry lines -->
+<line opacity="0.95" stroke="#FEF036" stroke-width="2.6" x1="340" x2="230" y1="35" y2="615"></line>
+<line opacity="0.95" stroke="#FEF036" stroke-width="2.6" x1="660" x2="770" y1="35" y2="615"></line>
+<line opacity="0.65" stroke="#FEF036" stroke-width="1.8" x1="155" x2="770" y1="150" y2="615"></line>
+<line opacity="0.65" stroke="#FEF036" stroke-width="1.8" x1="845" x2="230" y1="150" y2="615"></line>
+<line opacity="0.6" stroke="#FEF036" stroke-width="1.8" x1="100" x2="660" y1="480" y2="35"></line>
+<line opacity="0.6" stroke="#FEF036" stroke-width="1.8" x1="900" x2="340" y1="480" y2="35"></line>
+<!-- Horizontal chords -->
+<line opacity="0.4" stroke="#FEF036" stroke-width="1.2" x1="155" x2="845" y1="150" y2="150"></line>
+<line opacity="0.4" stroke="#FEF036" stroke-width="1.2" x1="100" x2="900" y1="480" y2="480"></line>
+</svg>
+</div>
+<!-- White Chalk / Spray Graffiti Anarchy Halo Symbol Behind Logo -->
+<div class="absolute z-15 pointer-events-none flex items-center justify-center chalk-filter" data-purpose="chalk-anarchy-symbol">
+<svg class="w-80 h-80 sm:w-96 sm:h-96 md:w-[460px] md:h-[460px] text-white opacity-95" fill="none" viewbox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+<filter id="chalk-roughness">
+<feturbulence basefrequency="0.065" numoctaves="4" result="noise" type="fractalNoise"></feturbulence>
+<fedisplacementmap in="SourceGraphic" in2="noise" scale="9" xchannelselector="R" ychannelselector="G"></fedisplacementmap>
+</filter>
+<g filter="url(#chalk-roughness)">
+<!-- Distressed Chalk Outer Ring -->
+<circle cx="200" cy="200" fill="none" opacity="0.95" r="140" stroke="#ffffff" stroke-dasharray="14 8 20 6 30 12" stroke-linecap="round" stroke-width="26"></circle>
+<!-- Crossbar / Inverted Anarchy-A Chalk Strokes -->
+<line opacity="0.92" stroke="#ffffff" stroke-linecap="round" stroke-width="24" x1="75" x2="325" y1="130" y2="270"></line>
+<line opacity="0.92" stroke="#ffffff" stroke-linecap="round" stroke-width="24" x1="110" x2="290" y1="270" y2="130"></line>
+<line opacity="0.95" stroke="#ffffff" stroke-linecap="round" stroke-width="22" x1="60" x2="340" y1="200" y2="200"></line>
+</g>
+</svg>
+</div>
+<!-- Massive Chromatic Glitch Central Typography: OV3RSIZ3D -->
+<div class="relative z-20 flex items-center justify-center select-none" data-purpose="hero-title-container">
+<div class="relative flex items-center justify-center">
+<!-- Chromatic Aberration: Deep Blue/Navy Backdrop -->
+<span aria-hidden="true" class="hero-title text-layer-deepblue absolute pointer-events-none">
+        OV3RSIZ3D
+      </span>
+<!-- Chromatic Aberration: Cyan Shift (Left) -->
+<span aria-hidden="true" class="hero-title text-layer-cyan absolute pointer-events-none">
+        OV3RSIZ3D
+      </span>
+<!-- Chromatic Aberration: Magenta/Ruby Shift (Right) -->
+<span aria-hidden="true" class="hero-title text-layer-red absolute pointer-events-none">
+        OV3RSIZ3D
+      </span>
+<!-- Foreground Electric Canary Yellow Headline -->
+<h1 class="hero-title text-layer-front">
+        OV3RSIZ3D
+      </h1>
+</div>
+</div>
+<!-- Corner Ambient Sound Control -->
+<div class="absolute bottom-6 left-6 md:left-10 z-40 flex items-center gap-3">
+<button class="group flex items-center gap-2.5 px-3 py-1.5 border border-white/10 hover:border-brandYellow/60 bg-black/60 backdrop-blur-sm transition-colors text-[11px] font-mono uppercase text-neutral-400 hover:text-brandYellow" id="sound-toggle" onclick="toggleAudio()">
+<span class="w-1.5 h-1.5 rounded-full bg-neutral-500 group-hover:bg-brandYellow transition-colors" id="sound-dot"></span>
+<span id="sound-label">AUDIO: MUTED</span>
+</button>
+</div>
+<!-- Atmospheric Scanline / CRT Texture Overlay -->
+<div class="absolute inset-0 pointer-events-none z-30 opacity-[0.035]" style="background-image: linear-gradient(rgba(255,255,255,0) 50%, rgba(0,0,0,0.85) 50%); background-size: 100% 4px;"></div>
+</main>
+<!-- END: HeroMain -->
+<!-- BEGIN: SneakPeaksModal -->
+<div class="fixed inset-0 z-50 hidden modal-backdrop flex items-center justify-center p-4 sm:p-6" data-purpose="modal-sneak-peaks" id="sneak-peaks-modal">
+<div class="bg-[#0b0811] border border-brandYellow/50 w-full max-w-5xl p-6 sm:p-8 md:p-10 relative text-white max-h-[90vh] overflow-y-auto shadow-[0_0_50px_rgba(254,240,54,0.12)]">
+<!-- Header -->
+<div class="flex items-start justify-between pb-5 mb-8 border-b border-white/10">
+<div>
+<div class="flex items-center gap-2 mb-1.5">
+<span class="inline-block w-2 h-2 bg-brandYellow"></span>
+<span class="text-xs font-mono text-brandYellow tracking-[0.2em] uppercase">// DROP 01 ARCHIVE PREVIEW</span>
+</div>
+<h2 class="text-3xl sm:text-4xl font-bold font-sans tracking-tight uppercase">Sneak Peaks</h2>
+<p class="text-xs font-mono text-neutral-400 mt-1">PROTOTYPES &amp; DIGITAL TWIN ARCHIVE • CONFIDENTIAL SPEC</p>
+</div>
+<button aria-label="Close modal" class="text-neutral-400 hover:text-brandYellow text-3xl font-mono leading-none transition-colors p-2" onclick="closeModal('sneak-peaks-modal')">×</button>
+</div>
+<!-- Lookbook Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+<!-- Item 1 -->
+<div class="bg-black/80 border border-neutral-800 hover:border-brandYellow transition-all group flex flex-col justify-between p-4">
+<div>
+<div class="relative w-full h-56 bg-[#130f1b] border border-neutral-800/80 mb-4 flex items-center justify-center overflow-hidden">
+<span class="absolute top-2 right-2 text-[10px] font-mono px-2 py-0.5 bg-brandYellow/10 text-brandYellow border border-brandYellow/30">SAMPLE #001</span>
+<div class="text-center p-4">
+<svg class="w-12 h-12 mx-auto text-neutral-600 group-hover:text-brandYellow transition-colors stroke-1 mb-2" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+</svg>
+<span class="font-mono text-xs text-neutral-400 group-hover:text-white transition-colors block">[CYBER HOODIE]</span>
+</div>
+<div class="absolute inset-0 bg-brandYellow/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</div>
+<h3 class="font-bold text-sm tracking-wide text-white uppercase font-sans">Heavy Cyber Hoodie</h3>
+<p class="text-xs font-mono text-neutral-400 mt-1">500 GSM Double-Faced Terry. NFC collar microchip.</p>
+</div>
+<div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-neutral-500">
+<span>LIMITED RUN</span>
+<span class="text-brandYellow">150 PCS</span>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="bg-black/80 border border-neutral-800 hover:border-brandYellow transition-all group flex flex-col justify-between p-4">
+<div>
+<div class="relative w-full h-56 bg-[#130f1b] border border-neutral-800/80 mb-4 flex items-center justify-center overflow-hidden">
+<span class="absolute top-2 right-2 text-[10px] font-mono px-2 py-0.5 bg-cyanGlitch/10 text-cyanGlitch border border-cyanGlitch/30">DROP 01</span>
+<div class="text-center p-4">
+<svg class="w-12 h-12 mx-auto text-neutral-600 group-hover:text-cyanGlitch transition-colors stroke-1 mb-2" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+</svg>
+<span class="font-mono text-xs text-neutral-400 group-hover:text-white transition-colors block">[TACTICAL JACKET]</span>
+</div>
+<div class="absolute inset-0 bg-cyanGlitch/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</div>
+<h3 class="font-bold text-sm tracking-wide text-white uppercase font-sans">Distressed Tactical Shell</h3>
+<p class="text-xs font-mono text-neutral-400 mt-1">Modular pockets, ballistic nylon &amp; taped seams.</p>
+</div>
+<div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-neutral-500">
+<span>REVEAL PENDING</span>
+<span class="text-brandYellow">100 PCS</span>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="bg-black/80 border border-neutral-800 hover:border-brandYellow transition-all group flex flex-col justify-between p-4">
+<div>
+<div class="relative w-full h-56 bg-[#130f1b] border border-neutral-800/80 mb-4 flex items-center justify-center overflow-hidden">
+<span class="absolute top-2 right-2 text-[10px] font-mono px-2 py-0.5 bg-redGlitch/10 text-redGlitch border border-redGlitch/30">ARCHIVE</span>
+<div class="text-center p-4">
+<svg class="w-12 h-12 mx-auto text-neutral-600 group-hover:text-redGlitch transition-colors stroke-1 mb-2" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+</svg>
+<span class="font-mono text-xs text-neutral-400 group-hover:text-white transition-colors block">[MONOLITHIC TEE]</span>
+</div>
+<div class="absolute inset-0 bg-redGlitch/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</div>
+<h3 class="font-bold text-sm tracking-wide text-white uppercase font-sans">Monolithic Heavy Tee</h3>
+<p class="text-xs font-mono text-neutral-400 mt-1">320 GSM Combed Cotton, boxy dropped shoulder fit.</p>
+</div>
+<div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-neutral-500">
+<span>LIMITED RUN</span>
+<span class="text-brandYellow">250 PCS</span>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="bg-black/80 border border-neutral-800 hover:border-brandYellow transition-all group flex flex-col justify-between p-4">
+<div>
+<div class="relative w-full h-56 bg-[#130f1b] border border-neutral-800/80 mb-4 flex items-center justify-center overflow-hidden">
+<span class="absolute top-2 right-2 text-[10px] font-mono px-2 py-0.5 bg-brandYellow/10 text-brandYellow border border-brandYellow/30">EDITION 01</span>
+<div class="text-center p-4">
+<svg class="w-12 h-12 mx-auto text-neutral-600 group-hover:text-brandYellow transition-colors stroke-1 mb-2" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+</svg>
+<span class="font-mono text-xs text-neutral-400 group-hover:text-white transition-colors block">[ACID CREWNECK]</span>
+</div>
+<div class="absolute inset-0 bg-brandYellow/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</div>
+<h3 class="font-bold text-sm tracking-wide text-white uppercase font-sans">Acid Wash Oversized Crew</h3>
+<p class="text-xs font-mono text-neutral-400 mt-1">Enzyme washed heavyweight fleece with raw hem.</p>
+</div>
+<div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-neutral-500">
+<span>PROTOTYPE</span>
+<span class="text-brandYellow">120 PCS</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- END: SneakPeaksModal -->
+<!-- BEGIN: AboutModal -->
+<div class="fixed inset-0 z-50 hidden modal-backdrop flex items-center justify-center p-4 sm:p-6" data-purpose="modal-about" id="about-modal">
+<div class="bg-[#0b0811] border border-brandYellow/50 w-full max-w-2xl p-6 sm:p-9 relative text-white shadow-[0_0_50px_rgba(254,240,54,0.12)]">
+<!-- Header -->
+<div class="flex items-start justify-between pb-4 mb-6 border-b border-white/10">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="inline-block w-2 h-2 bg-brandYellow"></span>
+<span class="text-xs font-mono text-brandYellow tracking-[0.2em] uppercase">// MANIFESTO</span>
+</div>
+<h2 class="text-2xl sm:text-3xl font-bold font-sans tracking-tight uppercase">ABOUT OV3RSIZ3D</h2>
+</div>
+<button aria-label="Close modal" class="text-neutral-400 hover:text-brandYellow text-3xl font-mono leading-none transition-colors p-2" onclick="closeModal('about-modal')">×</button>
+</div>
+<!-- Manifesto Content -->
+<div class="space-y-4 font-mono text-sm leading-relaxed text-neutral-300">
+<p class="text-base text-white leading-normal">
+        At the intersection of physical subculture and on-chain provenance. <strong class="text-brandYellow">OV3RSIZ3D</strong> is an exclusive phygital luxury streetwear collective established on Ethereum. Each garment is engineered with embedded cryptographic NFC chips paired 1:1 with digital ownership tokens.
+      </p>
+<div class="mt-5 space-y-3 pt-4 border-t border-white/10">
+<div class="flex items-start gap-3">
+<span class="text-brandYellow mt-0.5">▸</span>
+<div>
+<strong class="text-white">Phase 01: Genesis Drop</strong> — Heavyweight 500GSM Custom Cut &amp; Sew Garments engineered for durability and extreme silhouette.
+          </div>
+</div>
+<div class="flex items-start gap-3">
+<span class="text-brandYellow mt-0.5">▸</span>
+<div>
+<strong class="text-white">NFC Authentication</strong> — Tap with any smartphone to verify authenticity &amp; unlock token-gated private club perks, events, and future airdrops.
+          </div>
+</div>
+<div class="flex items-start gap-3">
+<span class="text-brandYellow mt-0.5">▸</span>
+<div>
+<strong class="text-white">Limited Supply</strong> — Hard-capped edition sizes with zero restocks. Each item is an unrepeatable artifact.
+          </div>
+</div>
+<div class="flex items-start gap-3">
+<span class="text-brandYellow mt-0.5">▸</span>
+<div>
+<strong class="text-white">Chain</strong> — Ethereum (ERC-721A) gas-optimized contract architecture.
+          </div>
+</div>
+</div>
+<div class="p-3.5 bg-black/80 border-l-2 border-brandYellow text-xs text-neutral-400 mt-6 tracking-wide">
+        ESTABLISHED ON BLOCKCHAIN • PHYSICAL REDEMPTION GUARANTEED • STRICTLY CAPPED
+      </div>
+</div>
+</div>
+</div>
+<!-- END: AboutModal -->
+<!-- BEGIN: ApplyModal -->
+<div class="fixed inset-0 z-50 hidden modal-backdrop flex items-center justify-center p-4 sm:p-6" data-purpose="modal-apply" id="apply-modal">
+<div class="bg-[#0b0811] border border-brandYellow/50 w-full max-w-md p-6 sm:p-8 relative text-white shadow-[0_0_50px_rgba(254,240,54,0.12)]">
+<!-- Header -->
+<div class="flex items-start justify-between pb-4 mb-5 border-b border-white/10">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="inline-block w-2 h-2 bg-brandYellow"></span>
+<span class="text-xs font-mono text-brandYellow tracking-[0.2em] uppercase">// ACCESS APPLICATION</span>
+</div>
+<h2 class="text-2xl font-bold font-sans tracking-tight uppercase">JOIN WHITELIST</h2>
+</div>
+<button aria-label="Close modal" class="text-neutral-400 hover:text-brandYellow text-3xl font-mono leading-none transition-colors p-2" onclick="closeModal('apply-modal')">×</button>
+</div>
+<form class="space-y-4" id="apply-form" onsubmit="event.preventDefault(); handleApplySubmit();">
+<div>
+<label class="block font-mono text-xs text-neutral-400 mb-1 uppercase tracking-wider" for="wallet-input">ETH Wallet Address *</label>
+<input class="w-full bg-black/90 border border-neutral-700 px-3.5 py-2.5 text-sm font-mono text-brandYellow placeholder-neutral-600 focus:outline-none focus:border-brandYellow transition-colors" id="wallet-input" placeholder="0x..." required="" type="text"/>
+</div>
+<div>
+<label class="block font-mono text-xs text-neutral-400 mb-1 uppercase tracking-wider" for="x-handle-input">X / Twitter Handle *</label>
+<input class="w-full bg-black/90 border border-neutral-700 px-3.5 py-2.5 text-sm font-mono text-brandYellow placeholder-neutral-600 focus:outline-none focus:border-brandYellow transition-colors" id="x-handle-input" placeholder="@handle" required="" type="text"/>
+</div>
+<div>
+<label class="block font-mono text-xs text-neutral-400 mb-1 uppercase tracking-wider" for="discord-handle-input">Discord Handle</label>
+<input class="w-full bg-black/90 border border-neutral-700 px-3.5 py-2.5 text-sm font-mono text-brandYellow placeholder-neutral-600 focus:outline-none focus:border-brandYellow transition-colors" id="discord-handle-input" placeholder="username#0000" type="text"/>
+</div>
+<div class="pt-2">
+<button class="w-full bg-brandYellow hover:bg-white text-black font-bold uppercase py-3.5 px-4 tracking-widest transition-all duration-200 font-mono text-sm shadow-[0_0_15px_rgba(254,240,54,0.3)] hover:shadow-[0_0_20px_rgba(255,255,255,0.4)]" type="submit">
+          SUBMIT APPLICATION
+        </button>
+</div>
+<p class="text-[10px] font-mono text-neutral-500 text-center tracking-wider mt-2">
+        Selected applicants will be notified via X or Discord prior to mint.
+      </p>
+</form>
+</div>
+</div>
+<!-- END: ApplyModal -->
+<!-- BEGIN: InteractiveModalScripts -->
+<script data-purpose="modal-and-sound-logic">
+  function openModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+      modal.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+  }
+
+  function handleApplySubmit() {
+    alert('Application recorded. Welcome to the OV3RSIZ3D queue.');
+    closeModal('apply-modal');
+  }
+
+  // Audio state toggle simulator
+  let isAudioPlaying = false;
+  function toggleAudio() {
+    isAudioPlaying = !isAudioPlaying;
+    const label = document.getElementById('sound-label');
+    const dot = document.getElementById('sound-dot');
+    if (isAudioPlaying) {
+      label.innerText = 'AUDIO: TRANSMITTING';
+      label.classList.add('text-brandYellow');
+      dot.classList.remove('bg-neutral-500');
+      dot.classList.add('bg-brandYellow', 'animate-ping');
+    } else {
+      label.innerText = 'AUDIO: MUTED';
+      label.classList.remove('text-brandYellow');
+      dot.classList.remove('bg-brandYellow', 'animate-ping');
+      dot.classList.add('bg-neutral-500');
+    }
+  }
+
+  // Close modals on backdrop click or ESC key
+  window.addEventListener('click', function(event) {
+    ['sneak-peaks-modal', 'about-modal', 'apply-modal'].forEach(function(modalId) {
+      const modal = document.getElementById(modalId);
+      if (event.target === modal) {
+        closeModal(modalId);
+      }
+    });
+  });
+
+  window.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+      ['sneak-peaks-modal', 'about-modal', 'apply-modal'].forEach(function(modalId) {
+        closeModal(modalId);
+      });
+    }
+  });
+</script>
+<!-- END: InteractiveModalScripts -->
+</body></html>
