@@ -18,7 +18,7 @@ export function WrongNetworkBanner() {
             [UNSUPPORTED NETWORK] You are connected to an external chain.
           </span>
           <span className="hidden md:inline text-white/80">
-            Switch to Robinhood Chain to access gas-subsidized minting.
+            Switch to Robinhood Chain to access minting.
           </span>
         </div>
         <button

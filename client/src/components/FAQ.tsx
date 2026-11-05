@@ -12,11 +12,11 @@ export function FAQ() {
   };
 
   return (
-    <section id="faq" className="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full">
+    <section id="faq" className="scroll-mt-24 py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full">
       <div className="text-center mb-12">
         <div className="inline-flex items-center gap-2 font-mono text-xs text-electricYellow tracking-widest uppercase mb-2">
           <span className="w-2 h-2 bg-electricYellow inline-block" />
-          <span>{"[SEC_07 // DECRYPTED FREQUENT QUERIES]"}</span>
+          <span>{"[SEC_06 // FAQ]"}</span>
         </div>
         <h2 className="text-3xl sm:text-5xl font-headline font-bold uppercase tracking-tight text-white">
           Frequently Answered

@@ -11,11 +11,12 @@ export function CityscapeBackdrop() {
       {/* 2. Dystopian Cyber City Skyline (Exact authentic art from oversizednft.xyz + spiced up) */}
       <div className="absolute inset-0 drone-cam flex items-end justify-center pointer-events-none">
         <div className="relative w-full h-[92vh] min-h-[600px] max-h-[1200px] overflow-hidden [mask-image:linear-gradient(to_bottom,black_80%,transparent_100%)]">
-          {/* Authentic High-Res Skyline Image from oversizednft.xyz */}
+          {/* Responsive High-Res Skyline WebP */}
           <picture>
-            <source srcSet="/brand/city_skyline.webp" type="image/webp" />
+            <source media="(max-width: 767px)" srcSet="/brand/city_skyline_mobile.webp" type="image/webp" />
+            <source media="(min-width: 768px)" srcSet="/brand/city_skyline.webp" type="image/webp" />
             <img
-              src="/brand/city_skyline.png"
+              src="/brand/city_skyline.webp"
               alt="OV3RSIZ3D Cyber City Silhouette"
               className="absolute inset-0 w-full h-full object-cover object-bottom opacity-85 select-none pointer-events-none"
             />
@@ -45,10 +46,10 @@ export function CityscapeBackdrop() {
           </div>
 
           {/* SPICE 2: Active Cyber Window Telemetry Flashes */}
-          <div className="absolute top-[22%] left-[4.5%] hidden sm:block w-1.5 h-3 bg-neonGreen/80 shadow-[0_0_10px_#00E599] animate-pulse" />
-          <div className="absolute top-[34%] left-[6.5%] hidden sm:block w-1.5 h-4 bg-neonGreen/90 shadow-[0_0_10px_#00E599] animate-pulse [animation-delay:1.1s]" />
-          <div className="absolute top-[24%] right-[4.5%] hidden sm:block w-1.5 h-3 bg-neonGreen/80 shadow-[0_0_10px_#00E599] animate-pulse [animation-delay:0.7s]" />
-          <div className="absolute top-[38%] right-[6.5%] hidden sm:block w-1.5 h-4 bg-neonGreen/90 shadow-[0_0_10px_#00E599] animate-pulse [animation-delay:1.5s]" />
+          <div className="absolute top-[22%] left-[4.5%] hidden sm:block w-1.5 h-3 bg-signalGreen/80 shadow-[0_0_10px_#00E599] animate-pulse" />
+          <div className="absolute top-[34%] left-[6.5%] hidden sm:block w-1.5 h-4 bg-signalGreen/90 shadow-[0_0_10px_#00E599] animate-pulse [animation-delay:1.1s]" />
+          <div className="absolute top-[24%] right-[4.5%] hidden sm:block w-1.5 h-3 bg-signalGreen/80 shadow-[0_0_10px_#00E599] animate-pulse [animation-delay:0.7s]" />
+          <div className="absolute top-[38%] right-[6.5%] hidden sm:block w-1.5 h-4 bg-signalGreen/90 shadow-[0_0_10px_#00E599] animate-pulse [animation-delay:1.5s]" />
 
           {/* SPICE 3: Atmospheric Ground Glow / War-Torn Cyber Haze */}
           <div className="absolute bottom-0 left-0 right-0 h-44 bg-gradient-to-t from-black via-black/70 to-transparent" />
@@ -65,7 +66,7 @@ export function CityscapeBackdrop() {
           </div>
           <div className="text-right space-y-0.5">
             <div>[ORBIT_UPLINK: ONLINE] ┐</div>
-            <div className="text-white/40 text-[8px] sm:text-[9px]">LINK: RH_CHAIN_L2 // 0.001 GWEI</div>
+            <div className="text-white/40 text-[8px] sm:text-[9px]">LINK: RH_CHAIN_L2</div>
           </div>
         </div>
 
@@ -82,7 +83,12 @@ export function CityscapeBackdrop() {
       </div>
 
       {/* 4. Deep Pitch Black Radial Vignette for Content Contrast */}
-      <div className="absolute inset-0 bg-radial from-transparent via-black/25 to-black/85 pointer-events-none" />
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.85) 100%)",
+        }}
+      />
     </div>
   );
 }
