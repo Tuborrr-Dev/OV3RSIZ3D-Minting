@@ -37,6 +37,15 @@ const config: Config = {
         "neon-lg": "0 0 35px rgba(252, 238, 84, 0.5)",
         cyber: "0 0 30px rgba(40, 25, 68, 0.8)",
       },
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+      },
+      animation: {
+        fadeIn: "fadeIn 0.2s ease-out forwards",
+      },
     },
   },
   plugins: [],

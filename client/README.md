@@ -6,13 +6,13 @@ Web3 mint frontend for the OV3RSIZ3D NFT collection (2,222 supply) on Robinhood 
 - **Framework:** Next.js 14 (App Router) + TypeScript
 - **Styling:** Tailwind CSS + Custom Cyberpunk Chamfered Design Tokens
 - **Web3:** Wagmi v2 + Viem + RainbowKit + TanStack React Query
-- **Effects:** Web Audio API Synth Simulator, Canvas Confetti, SVG Cyber Cityscape, 3D Wireframe Cage
+- **Target:** Static export (`output: "export"`)
 
 ## Routes
-- `/` — Hero with 3D wireframe cage & vector skyline, collection stats, lore manifesto, sneak peeks lookbook, mint station, roadmap, FAQ.
-- `/mint` — Phase countdown, phase timeline (Team, GTD, FCFS, Public), live minted progress counter, wallet connector, mint button, "You hold" indicator.
-- `/allowlist` — Community surveillance task checklist, Merkle tree eligibility query terminal with real-time feedback.
-- `/about` — Full doctrine, 500GSM Portuguese textile engineering, NFC microchip integration, Robinhood Chain architecture.
+- `/` — Hero with geometric star & cyber skyline, The Edition metrics strip, sneak peeks, mint station, roadmap anchor, FAQ.
+- `/mint` — Phase timeline (Team, GTD, FCFS, Public), minted progress counter, wallet connector, mint station, "You hold" indicator.
+- `/allowlist` — Allowlist task information and signed voucher eligibility terminal.
+- `/about` — Collection overview, The Fitting Room app intro, links to field guide and roadmap.
 
 ## Getting Started
 
