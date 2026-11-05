@@ -77,7 +77,7 @@ body {
   );
 }
 
-/* Glitch Chromatic Text Effect (Exact match from ov3rsiz3d_desktop_web3_experience) */
+/* Glitch Chromatic Text Effect */
 .glitch-wrapper {
   position: relative;
   display: inline-block;
@@ -285,4 +285,73 @@ body {
     rgba(0, 0, 0, 0.7) 50%
   );
   background-size: 100% 4px;
+}
+
+/* One-shot glitch for Field Guide interactions */
+@keyframes glitchOnce {
+  0% { transform: translate(0); filter: none; }
+  20% { transform: translate(-3px, 1px); filter: drop-shadow(-3px 0 #E8384F) drop-shadow(3px 0 #00F0FF); }
+  40% { transform: translate(3px, -1px); filter: drop-shadow(3px 0 #E8384F) drop-shadow(-3px 0 #00F0FF); }
+  60% { transform: translate(-2px, 0); }
+  100% { transform: translate(0); filter: none; }
+}
+.fx-glitch-once {
+  animation: glitchOnce 0.25s ease-out forwards;
+}
+
+/* Demon Walker walk cycle */
+@keyframes walkerBob {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  25% { transform: translateY(-2px) rotate(-1.5deg); }
+  50% { transform: translateY(0px) rotate(0deg); }
+  75% { transform: translateY(-2px) rotate(1.5deg); }
+}
+
+@keyframes walkerLegs {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+.animate-walker-bob {
+  animation: walkerBob 0.35s steps(4) infinite;
+}
+
+.animate-walker-legs {
+  animation: walkerLegs 0.35s steps(4) infinite;
+}
+
+/* Data packet pulse along roadmap line */
+@keyframes dataPacket {
+  0% { top: 0%; opacity: 0; }
+  15% { opacity: 0.9; }
+  85% { opacity: 0.9; }
+  100% { top: 100%; opacity: 0; }
+}
+
+.animate-data-packet {
+  animation: dataPacket 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Prefers Reduced Motion: Disable infinite & glitch animations */
+@media (prefers-reduced-motion: reduce) {
+  .drone-cam,
+  .radar-sweep-bar,
+  .floating-cage,
+  .cage-anim,
+  .active-scan-glitch,
+  .active-scan-glitch-title,
+  .active-scan-glitch-card,
+  .scan-beam-laser,
+  .glitch-wrapper:hover::before,
+  .glitch-wrapper:hover::after,
+  .animate-walker-bob,
+  .animate-walker-legs,
+  .animate-data-packet,
+  .animate-ping,
+  .animate-pulse,
+  .animate-spin {
+    animation: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }

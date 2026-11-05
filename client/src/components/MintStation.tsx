@@ -3,12 +3,12 @@
 import React, { useState, useEffect } from "react";
 import { useWeb3 } from "@/lib/web3-context";
 import { PHASES, TOTAL_SUPPLY } from "@/lib/constants";
-import { Zap, Clock, ShieldCheck, CheckCircle2, AlertCircle, ExternalLink, RefreshCw } from "lucide-react";
+import { Zap, Clock, AlertCircle, CheckCircle2, ExternalLink, RefreshCw } from "lucide-react";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 export function MintStation() {
   const {
     isConnected,
-    connectDemoWallet,
     currentPhase,
     setCurrentPhaseId,
     mintedCount,
@@ -23,12 +23,14 @@ export function MintStation() {
     mintError,
     executeMint,
     clearMintStatus,
+    isDemoMode,
   } = useWeb3();
 
-  // Simulated live countdown timer to next phase
+  // Simulated live countdown timer to next phase (only in demo mode)
   const [timeLeft, setTimeLeft] = useState({ hours: 14, minutes: 22, seconds: 48 });
 
   useEffect(() => {
+    if (!isDemoMode) return;
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev.seconds > 0) {
@@ -42,24 +44,26 @@ export function MintStation() {
       });
     }, 1000);
     return () => clearInterval(timer);
-  }, []);
+  }, [isDemoMode]);
 
-  const progressPercent = Math.min(100, Number(((mintedCount / TOTAL_SUPPLY) * 100).toFixed(1)));
+  const progressPercent = isDemoMode
+    ? Math.min(100, Number(((mintedCount / TOTAL_SUPPLY) * 100).toFixed(1)))
+    : 0;
 
   return (
-    <section id="mint-station" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+    <section id="mint-station" className="scroll-mt-24 py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
       {/* Header with Phase Timeline Selector */}
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 pb-6 border-b border-white/10">
         <div>
           <div className="flex items-center gap-2 font-mono text-xs text-electricYellow tracking-widest uppercase mb-2">
             <span className="w-2 h-2 bg-electricYellow inline-block" />
-            <span>{"[SEC_04 // TERMINAL EXECUTION]"}</span>
+            <span>{"[SEC_04 // MINT STATION]"}</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-headline font-bold uppercase tracking-tight text-white">
             Mint Station
           </h2>
           <p className="font-mono text-xs sm:text-sm text-neutral-400 mt-2 max-w-xl">
-            Contract verified on Robinhood Chain Arbitrum Orbit L2. Instant finality with programmatic ERC-721A batch optimization.
+            Robinhood Chain (Arbitrum Orbit L2). ERC-721A mint architecture.
           </p>
         </div>
 
@@ -82,8 +86,8 @@ export function MintStation() {
               >
                 <span className="text-[10px] text-neutral-500 font-bold">{phase.label}</span>
                 <span className="font-bold">{phase.name}</span>
-                <span className="text-[10px] text-signalGreen mt-0.5">
-                  {phase.status === "LIVE" ? "● ACTIVE NOW" : phase.status}
+                <span className="text-[10px] text-neutral-400 mt-0.5">
+                  {phase.maxPerWallet ? `Max ${phase.maxPerWallet}` : "Cap TBA"}
                 </span>
               </button>
             );
@@ -103,8 +107,10 @@ export function MintStation() {
               </span>
             </div>
             <div className="flex items-center gap-2 font-mono text-xs">
-              <span className="w-2 h-2 rounded-full bg-signalGreen animate-ping" />
-              <span className="text-signalGreen font-bold">ONLINE</span>
+              <span className="w-2 h-2 rounded-full bg-signalGreen" />
+              <span className="text-neutral-400 font-bold">
+                {isDemoMode ? "ONLINE" : "STANDBY"}
+              </span>
             </div>
           </div>
 
@@ -113,15 +119,19 @@ export function MintStation() {
             <div className="flex justify-between items-center font-mono text-xs sm:text-sm">
               <span className="text-neutral-400">TOTAL ALLOCATED:</span>
               <span className="text-electricYellow font-bold">
-                {mintedCount.toLocaleString()} / {TOTAL_SUPPLY.toLocaleString()} MINTED ({progressPercent}%)
+                {isDemoMode
+                  ? `${mintedCount.toLocaleString()} / ${TOTAL_SUPPLY.toLocaleString()} MINTED (${progressPercent}%)`
+                  : `— / ${TOTAL_SUPPLY.toLocaleString()}`}
               </span>
             </div>
-            <div className="w-full h-3 bg-black border border-white/15 p-0.5">
-              <div
-                className="h-full bg-electricYellow shadow-[0_0_12px_#FCEE54] transition-all duration-500"
-                style={{ width: `${progressPercent}%` }}
-              />
-            </div>
+            {isDemoMode && (
+              <div className="w-full h-3 bg-black border border-white/15 p-0.5">
+                <div
+                  className="h-full bg-electricYellow shadow-[0_0_12px_#FCEE54] transition-all duration-500"
+                  style={{ width: `${progressPercent}%` }}
+                />
+              </div>
+            )}
           </div>
 
           {/* Interactive Quantity Selector */}
@@ -131,13 +141,15 @@ export function MintStation() {
                 SELECT QUANTITY
               </span>
               <span className="font-mono text-xs text-white">
-                MAX {currentPhase.maxPerWallet} PER WALLET IN {currentPhase.label}
+                {currentPhase.maxPerWallet
+                  ? `MAX ${currentPhase.maxPerWallet} PER WALLET IN ${currentPhase.label}`
+                  : `ALLOCATION CAP TBA IN ${currentPhase.label}`}
               </span>
             </div>
             <div className="flex items-center gap-3">
               <button
                 onClick={decrementQuantity}
-                disabled={quantity <= 1 || isMinting}
+                disabled={!isDemoMode || quantity <= 1 || isMinting}
                 className="w-10 h-10 bg-[#0d0d0d] border border-white/20 hover:border-electricYellow text-electricYellow font-bold text-lg flex items-center justify-center transition-colors disabled:opacity-40"
               >
                 -
@@ -147,7 +159,7 @@ export function MintStation() {
               </span>
               <button
                 onClick={incrementQuantity}
-                disabled={quantity >= currentPhase.maxPerWallet || isMinting}
+                disabled={!isDemoMode || (currentPhase.maxPerWallet !== null && quantity >= currentPhase.maxPerWallet) || isMinting}
                 className="w-10 h-10 bg-[#0d0d0d] border border-white/20 hover:border-electricYellow text-electricYellow font-bold text-lg flex items-center justify-center transition-colors disabled:opacity-40"
               >
                 +
@@ -160,22 +172,22 @@ export function MintStation() {
             <div className="flex justify-between text-neutral-400">
               <span>UNIT PRICE:</span>
               <span className="text-white">
-                {unitPriceEth === 0 ? "FREE MINT" : `${unitPriceEth} ETH`}
+                {unitPriceEth === null ? "TBA" : unitPriceEth === 0 ? "FREE MINT" : `${unitPriceEth} ETH`}
               </span>
             </div>
             <div className="flex justify-between text-neutral-400">
-              <span>ESTIMATED GAS:</span>
-              <span className="text-signalGreen">&lt; 0.0001 ETH (ROBINHOOD L2)</span>
+              <span>CHAIN:</span>
+              <span className="text-signalGreen">ROBINHOOD CHAIN</span>
             </div>
             <div className="flex justify-between text-base font-bold pt-2 border-t border-white/10 text-white">
               <span>TOTAL COST:</span>
               <span className="text-electricYellow">
-                {totalPriceEth === 0 ? "FREE" : `${totalPriceEth} ETH`}
+                {totalPriceEth === null ? "TBA" : totalPriceEth === 0 ? "FREE" : `${totalPriceEth} ETH`}
               </span>
             </div>
           </div>
 
-          {/* "You Hold" Line Required by AGENTS.md Section 7 */}
+          {/* "You Hold" Line */}
           <div className="bg-[#0d0d0d] border border-white/10 px-4 py-3 mb-6 flex items-center justify-between font-mono text-xs">
             <span className="text-neutral-300">YOU HOLD:</span>
             <span className="text-electricYellow font-bold text-sm">
@@ -192,14 +204,17 @@ export function MintStation() {
           )}
 
           {/* Primary Action Button */}
-          {!isConnected ? (
+          {!isDemoMode ? (
             <button
-              onClick={connectDemoWallet}
-              className="w-full clip-chamfer-btn bg-electricYellow hover:bg-white text-black font-headline font-bold text-base py-4 uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(252,238,84,0.3)] flex items-center justify-center gap-2"
+              disabled
+              className="w-full clip-chamfer-btn bg-neutral-800 text-neutral-500 font-headline font-bold text-base py-4 uppercase tracking-widest cursor-not-allowed flex items-center justify-center gap-2"
             >
-              <Zap className="w-5 h-5" />
-              <span>CONNECT WALLET TO MINT</span>
+              <span>MINT NOT LIVE</span>
             </button>
+          ) : !isConnected ? (
+            <div className="w-full flex justify-center">
+              <ConnectButton />
+            </div>
           ) : (
             <button
               onClick={executeMint}
@@ -244,28 +259,39 @@ export function MintStation() {
           <div className="bg-[#080808] border border-white/10 p-6">
             <div className="flex items-center gap-2 font-mono text-xs text-neutral-400 uppercase pb-3 border-b border-white/10 mb-4">
               <Clock className="w-4 h-4 text-electricYellow" />
-              <span>NEXT PHASE INITIATION COUNTDOWN</span>
+              <span>NEXT PHASE INITIATION</span>
             </div>
-            <div className="grid grid-cols-3 gap-3 text-center font-mono">
-              <div className="bg-black/60 border border-white/5 p-3">
-                <span className="text-2xl sm:text-3xl font-bold text-electricYellow block">
-                  {String(timeLeft.hours).padStart(2, "0")}
-                </span>
-                <span className="text-[10px] text-neutral-400">HOURS</span>
+            {isDemoMode ? (
+              <div className="grid grid-cols-3 gap-3 text-center font-mono">
+                <div className="bg-black/60 border border-white/5 p-3">
+                  <span className="text-2xl sm:text-3xl font-bold text-electricYellow block">
+                    {String(timeLeft.hours).padStart(2, "0")}
+                  </span>
+                  <span className="text-[10px] text-neutral-400">HOURS</span>
+                </div>
+                <div className="bg-black/60 border border-white/5 p-3">
+                  <span className="text-2xl sm:text-3xl font-bold text-electricYellow block">
+                    {String(timeLeft.minutes).padStart(2, "0")}
+                  </span>
+                  <span className="text-[10px] text-neutral-400">MINUTES</span>
+                </div>
+                <div className="bg-black/60 border border-white/5 p-3">
+                  <span className="text-2xl sm:text-3xl font-bold text-electricYellow block">
+                    {String(timeLeft.seconds).padStart(2, "0")}
+                  </span>
+                  <span className="text-[10px] text-neutral-400">SECONDS</span>
+                </div>
               </div>
-              <div className="bg-black/60 border border-white/5 p-3">
-                <span className="text-2xl sm:text-3xl font-bold text-electricYellow block">
-                  {String(timeLeft.minutes).padStart(2, "0")}
+            ) : (
+              <div className="p-4 bg-black/60 border border-white/5 text-center font-mono">
+                <span className="text-xl sm:text-2xl font-bold text-electricYellow block">
+                  MINT DATE: TBA
                 </span>
-                <span className="text-[10px] text-neutral-400">MINUTES</span>
-              </div>
-              <div className="bg-black/60 border border-white/5 p-3">
-                <span className="text-2xl sm:text-3xl font-bold text-electricYellow block">
-                  {String(timeLeft.seconds).padStart(2, "0")}
+                <span className="text-[10px] text-neutral-400 uppercase mt-1 block">
+                  PLANNED FOR Q4 2026
                 </span>
-                <span className="text-[10px] text-neutral-400">SECONDS</span>
               </div>
-            </div>
+            )}
           </div>
 
           {/* Phase Matrix Details */}
@@ -275,45 +301,17 @@ export function MintStation() {
             </span>
 
             <div className="space-y-3">
-              <div className="p-3 bg-[#0d0d0d] border border-white/5">
-                <div className="flex justify-between text-electricYellow font-bold">
-                  <span>TEAM ALLOCATION</span>
-                  <span>22 TOKENS</span>
+              {PHASES.map((phase) => (
+                <div key={phase.id} className="p-3 bg-[#0d0d0d] border border-white/5">
+                  <div className="flex justify-between text-electricYellow font-bold">
+                    <span>{phase.name.toUpperCase()}</span>
+                    <span>{phase.maxPerWallet ? `${phase.maxPerWallet} PER WALLET` : "TBA"}</span>
+                  </div>
+                  <p className="text-neutral-400 text-[11px] mt-1">
+                    {phase.description}
+                  </p>
                 </div>
-                <p className="text-neutral-400 text-[11px] mt-1">
-                  Owner-only hardcap, counted inside total 2,222 supply.
-                </p>
-              </div>
-
-              <div className="p-3 bg-[#0d0d0d] border border-white/5">
-                <div className="flex justify-between text-signalGreen font-bold">
-                  <span>GUARANTEED (GTD)</span>
-                  <span>1 PER WALLET</span>
-                </div>
-                <p className="text-neutral-400 text-[11px] mt-1">
-                  Requires backend EIP-712 cryptographic signed voucher.
-                </p>
-              </div>
-
-              <div className="p-3 bg-[#0d0d0d] border border-white/5">
-                <div className="flex justify-between text-white font-bold">
-                  <span>FCFS ALLOWLIST</span>
-                  <span>1 PER WALLET</span>
-                </div>
-                <p className="text-neutral-400 text-[11px] mt-1">
-                  Competitive queue with backend verification.
-                </p>
-              </div>
-
-              <div className="p-3 bg-[#0d0d0d] border border-white/5">
-                <div className="flex justify-between text-white font-bold">
-                  <span>PUBLIC MINT</span>
-                  <span>2 PER WALLET</span>
-                </div>
-                <p className="text-neutral-400 text-[11px] mt-1">
-                  Open to all Robinhood Chain wallets until 2,222 max supply.
-                </p>
-              </div>
+              ))}
             </div>
           </div>
         </div>

@@ -7,9 +7,8 @@ import { WrongNetworkBanner } from "@/components/WrongNetworkBanner";
 import { MobileBottomDock } from "@/components/MobileBottomDock";
 
 export const metadata: Metadata = {
-  title: "OV3RSIZ3D // 2,222 Hooded Extraterrestrials on Robinhood Chain",
-  description:
-    "Official Web3 Mint Site for OV3RSIZ3D NFT collection on Robinhood Chain (Arbitrum Orbit L2). 2,222 Hooded Extraterrestrials in heavyweight silhouettes.",
+  title: "OV3RSIZ3D // 2,222 hooded entities on Robinhood Chain",
+  description: "2,222 hand-drawn, hooded entities in oversized clothing, on Robinhood Chain.",
 };
 
 export default function RootLayout({
